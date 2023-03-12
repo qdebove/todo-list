@@ -1,14 +1,13 @@
-import styled from "@emotion/styled";
+import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import TodoState from "../../models/enums/TodoState";
 import Todo from "../../models/Todo";
 
 type TodoCardProps = {
   todo: Todo;
+  changeStateHandler: () => void;
 };
 
-const Card = styled.div<{ todo: Todo }>``;
-
-export default function TodoCard({ todo }: TodoCardProps) {
+export default function TodoCard({ todo, changeStateHandler }: TodoCardProps) {
   return (
     <div
       className={`${
@@ -22,6 +21,21 @@ export default function TodoCard({ todo }: TodoCardProps) {
       >
         {todo.title}
       </p>
+      {(todo.state === TodoState.TO_DO && (
+        <CheckIcon
+          onClick={changeStateHandler}
+          width={32}
+          height={32}
+          className="text-primary-800 m-2 hover:text-primary-200 cursor-pointer"
+        />
+      )) || (
+        <XMarkIcon
+          onClick={changeStateHandler}
+          width={32}
+          height={32}
+          className="text-tertiary-800 m-2 hover:text-tertiary-200 cursor-pointer"
+        />
+      )}
     </div>
   );
 }

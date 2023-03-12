@@ -5,9 +5,13 @@ import TodoCard from "./TodoCard";
 
 type TodoContainerProps = {
   todos: Todo[];
+  changeTodoState: (todo: Todo) => void;
 };
 
-export default function TodoContainer({ todos }: TodoContainerProps) {
+export default function TodoContainer({
+  todos,
+  changeTodoState,
+}: TodoContainerProps) {
   return (
     <section className="w-full flex flex-row justify-center items-start p-4 flex-wrap">
       <TransitionGroup component={null}>
@@ -28,7 +32,10 @@ export default function TodoContainer({ todos }: TodoContainerProps) {
                 ref={itemRef}
                 style={{ transitionDelay: `${delay}ms` }}
               >
-                <TodoCard todo={todo} />
+                <TodoCard
+                  changeStateHandler={() => changeTodoState(todo)}
+                  todo={todo}
+                />
               </div>
             </CSSTransition>
           );
