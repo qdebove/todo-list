@@ -1,4 +1,4 @@
-import { CheckIcon, LinkIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { CheckIcon, LinkIcon } from "@heroicons/react/24/outline";
 import { ICON_SIZE } from "../../constants/sizes";
 import TodoState from "../../models/enums/TodoState";
 import Todo from "../../models/Todo";
@@ -33,19 +33,12 @@ export default function TodoCard({
         height={ICON_SIZE}
         className="text-secondary-400 m-2 hover:text-secondary-200 cursor-pointer"
       />
-      {(todo.state === TodoState.TO_DO && (
+      {todo.state === TodoState.TO_DO && (
         <CheckIcon
           onClick={changeStateHandler}
           width={ICON_SIZE}
           height={ICON_SIZE}
           className="text-primary-800 m-2 hover:text-primary-200 cursor-pointer"
-        />
-      )) || (
-        <XMarkIcon
-          onClick={changeStateHandler}
-          width={ICON_SIZE}
-          height={ICON_SIZE}
-          className="text-tertiary-800 m-2 hover:text-tertiary-200 cursor-pointer"
         />
       )}
     </div>

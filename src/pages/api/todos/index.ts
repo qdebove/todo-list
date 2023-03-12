@@ -44,10 +44,12 @@ export default async function handler(
 
         return res.status(CREATED).json(newTodo);
       } catch (err: any) {
-        if (err instanceof AttributeError) {
-          return res.status(BAD_REQUEST).json(err);
-        }
         console.log(err);
+        if (err instanceof AttributeError) {
+          return res
+            .status(BAD_REQUEST)
+            .json({ target: err.target, message: err.message });
+        }
         return res.status(INTERNAL_SERVER_ERROR).end();
       }
     }

@@ -1,9 +1,11 @@
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useEffect, useState } from "react";
+import CreateFabButton from "../../components/buttons/CreateFabButton";
 import Header from "../../components/Header";
 import NavBar from "../../components/NavBar";
 import TodoContainer from "../../components/todos/TodoContainer";
+import TodoCreation from "../../components/todos/TodoCreation";
 import { useSnackbarContext, useTodoContext } from "../../context";
 import { SnackbarActionType } from "../../context/reducers/snackbar";
 import { TodoActionType } from "../../context/reducers/todos";
@@ -15,6 +17,7 @@ export default function Home() {
   const { state, dispatch } = useTodoContext();
   const snackbarContext = useSnackbarContext();
   const router = useRouter();
+  const [showCreationModal, setShowCreationModal] = useState(false);
 
   const handleStateChange = async (todo: Todo) => {
     try {
@@ -52,6 +55,9 @@ export default function Home() {
     router.push(`/todo/${todo.id}`);
   };
 
+  const handleShowModal = () => setShowCreationModal(true);
+  const handleHideModal = () => setShowCreationModal(false);
+
   useEffect(() => {
     const service: TodoService = new TodoService();
     service
@@ -68,11 +74,15 @@ export default function Home() {
   }, []);
 
   return (
-    <TodoContainer
-      handleNavigate={handleNavigate}
-      todos={state!.data}
-      changeTodoState={handleStateChange}
-    />
+    <>
+      <TodoContainer
+        handleNavigate={handleNavigate}
+        todos={state!.data}
+        changeTodoState={handleStateChange}
+      />
+      <CreateFabButton color="primary" handleCreate={handleShowModal} />
+      {showCreationModal && <TodoCreation handleCloseModal={handleHideModal} />}
+    </>
   );
 }
 
