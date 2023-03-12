@@ -2,7 +2,7 @@ import Image from "next/legacy/image";
 
 export default function NavBar() {
   return (
-    <nav className="w-full h-[88px] shadow flex flex-row justify-between items-center">
+    <nav className="w-full h-[88px] shadow flex flex-row justify-between items-center bg-white">
       <div className="h-4/5 w-52 mx-4 relative">
         <Image
           priority

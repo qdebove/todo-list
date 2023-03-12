@@ -8,7 +8,7 @@ export type ButtonProps = ColorableElement & {
 };
 
 export type ClickableButtonProps = ButtonProps & {
-  onClickHandler: () => any;
+  onClickHandler: () => void;
 };
 
 export default function Button({

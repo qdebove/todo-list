@@ -1,9 +1,19 @@
 import { createContext, Dispatch, useContext, useReducer } from "react";
+import { snackbarReducer, SnackbarReducerAction } from "./reducers/snackbar";
 import { todoReducer, TodoReducerAction } from "./reducers/todos";
+import { SnackbarState } from "./states/snackbar";
 import { State } from "./states/todos";
 
 const initialTodoState: State = {
   data: [],
+};
+
+const initialSnackbarState: SnackbarState = {
+  show: false,
+  snackbar: {
+    title: "",
+    description: "",
+  },
 };
 
 const TodoContext = createContext<{
@@ -19,6 +29,11 @@ const combineReducers =
     return state;
   };
 
+const SnackbarContext = createContext<{
+  state: SnackbarState | null;
+  dispatch: Dispatch<SnackbarReducerAction> | null;
+}>({ state: null, dispatch: null });
+
 const TodoProvider = (data: any) => {
   const [state, dispatch] = useReducer(
     combineReducers(todoReducer),
@@ -31,6 +46,20 @@ const TodoProvider = (data: any) => {
   );
 };
 
-const useTodoContext = () => useContext(TodoContext);
+const SnackbarProvider = (data: any) => {
+  const [state, dispatch] = useReducer(snackbarReducer, initialSnackbarState);
+  const value = { state, dispatch };
 
-export { useTodoContext, TodoProvider };
+  return (
+    <SnackbarContext.Provider value={value}>
+      {data.children}
+    </SnackbarContext.Provider>
+  );
+};
+
+const useTodoContext = () => useContext(TodoContext);
+const useSnackbarContext = () => {
+  return useContext(SnackbarContext);
+};
+
+export { useTodoContext, TodoProvider, useSnackbarContext, SnackbarProvider };

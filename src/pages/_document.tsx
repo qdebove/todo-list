@@ -5,7 +5,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head />
-      <body className={`${UBUNTU_FONT.variable}`}>
+      <body className={`${UBUNTU_FONT.variable} bg-slate-50`}>
         <Main />
         <NextScript />
       </body>
